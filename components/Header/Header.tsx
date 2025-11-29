@@ -2,22 +2,25 @@
 
 import Link from "next/link";
 import React from "react";
+import Icon from "@/components/Icon/Icon";
 
 const Header = () => {
     return (
-        <>
-        <Link href="/">Rental<span>Car</span></Link>
+        <div>
+        <Link href="/" className="">
+            <Icon name="icon-logo" />
+        </Link>
         <nav>
             <ul>
                 <li>
                     <Link href="/">Home</Link>
                 </li>
                 <li>
-                    <Link href="/about">Catalog</Link>
+                    <Link href="/catalog">Catalog</Link>
                 </li>
             </ul>
         </nav>
-        </>
+        </div>
     )
 }
 
