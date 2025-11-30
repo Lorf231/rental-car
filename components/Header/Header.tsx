@@ -13,12 +13,12 @@ const Header = () => {
     }
 
     return (
-        <div className="flex items-center justify-between py-[24px] px-[120px] bg-[#f2f4f7]">
+        <div className="flex items-center justify-between py-6 px-[120px] bg-[#f2f4f7] w-full">
         <Link href="/" className="">
             <Icon name="icon-logo" width={104} height={16} />
         </Link>
         <nav className="">
-            <ul className="flex gap-[32px]">
+            <ul className="flex gap-8">
                 <li>
                     <Link href="/" className={`button ${getLinkClass("/")}`}>Home</Link>
                 </li>
