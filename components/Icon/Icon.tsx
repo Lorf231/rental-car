@@ -2,17 +2,18 @@ import React from "react";
 
 type IconProps = {
     name: string;
-    size?: number;
+    width?: number;
+    height?: number;
     classname?: string;
     children?: React.ReactNode;
 };
 
-const Icon: React.FC<IconProps> = ({name, size, classname = ""}) => {
+const Icon: React.FC<IconProps> = ({name, width, height, classname = ""}) => {
     return(
         <svg
         className=""
-        width={size}
-        height={size}
+        width={width}
+        height={height}
         aria-hidden="true">
             <use href={`/icons.svg#${name}`} />
         </svg>
