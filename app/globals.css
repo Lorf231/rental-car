@@ -2,7 +2,7 @@
 
 @layer base {
   body {
-    @apply bg-white text-black w-[1440px];
+    @apply bg-white text-black;
   }
 }
 
