@@ -16,7 +16,7 @@ const Hero = () => {
         
         <Link 
           href="/catalog" 
-          className="mt-8 px-10 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-300 shadow-lg"
+          className="mt-8 px-10 py-3 button"
         >
           View Catalog
         </Link>

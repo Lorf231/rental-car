@@ -20,10 +20,10 @@ const Header = () => {
         <nav className="">
             <ul className="flex gap-8">
                 <li>
-                    <Link href="/" className={`button ${getLinkClass("/")}`}>Home</Link>
+                    <Link href="/" className={`nav-item ${getLinkClass("/")}`}>Home</Link>
                 </li>
                 <li>
-                    <Link href="/catalog" className={`button ${getLinkClass("/catalog")}`}>Catalog</Link>
+                    <Link href="/catalog" className={`nav-item ${getLinkClass("/catalog")}`}>Catalog</Link>
                 </li>
             </ul>
         </nav>
