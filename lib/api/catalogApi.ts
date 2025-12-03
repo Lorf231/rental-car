@@ -1,5 +1,4 @@
 import api from './api';
-import { Car } from '@/types';
 import { FilterOptions, FetchCarsResponse } from '@/types';
 
 export const getCars = async (params: FilterOptions) => {

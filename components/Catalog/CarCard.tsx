@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Car } from "@/types/index";
-import { useCarStore } from "@/lib/store/carStore";
+import Link from "next/link";
 
 interface CarCardProps {
   car: Car;
@@ -69,10 +69,11 @@ const CarCard = ({ car }: CarCardProps) => {
           </div>
         </div>
       </div>
-
-      <button className="w-full bg-blue-600 text-white py-2.5 rounded-xl text-sm font-semibold hover:bg-blue-700 transition-colors">
-        Read more
-      </button>
+      <Link href={`/cars/${car.id}`}>
+        <button className="w-full bg-blue-600 text-white py-2.5 rounded-xl text-sm font-semibold hover:bg-blue-700 transition-colors">
+          Read more
+        </button>
+      </Link>
     </div>
   );
 };
