@@ -1,20 +1,34 @@
-// types/index.ts
 export interface Car {
-  id: number | string;
-  make: string;
-  model: string;
+  id: string;
   year: number;
-  rentalPrice: number;
-  address: string;
-  rentalCompany: string;
+  brand: string;
+  model: string;
   type: string;
+  img: string;
+  description: string;
+  fuelConsumption: string;
+  engineSize: string;
+  accessories: string[];
+  functionalities: string[];
+  rentalPrice: string;
+  rentalCompany: string;
+  address: string;
+  rentalConditions: string[];
   mileage: number;
-  img?: string;
 }
 
 export interface FilterOptions {
-  selectedBrand: string;
-  selectedPrice: string;
-  milesFrom: number | string;
-  milesTo: number | string;
+  brand?: string;
+  price?: string;
+  mileageFrom?: number | "";
+  mileageTo?: number | "";
+  page?: number;  // <-- Додали
+  limit?: number; // <-- Додали (за бажанням, зазвичай 8 або 12)
+}
+
+export interface FetchCarsResponse {
+  cars: Car[];
+  totalCars: number;
+  page: number;
+  totalPages: number;
 }

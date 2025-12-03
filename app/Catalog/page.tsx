@@ -1,83 +1,71 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Car } from "@/types";
+import { useEffect } from "react";
 import SearchFilters from "@/components/Catalog/SearchFilters";
 import CarGrid from "@/components/Catalog/CarGrid";
+import { useCarStore } from "@/lib/store/carStore";
+import { useFilterStore } from "@/lib/store/filterStore";
 
 export default function CatalogPage() {
-  const [cars, setCars] = useState<Car[]>([]);
-  const [brands, setBrands] = useState<string[]>([]);
-  const [prices, setPrices] = useState<number[]>([]);
+  const { 
+    cars, 
+    isLoading, 
+    error, 
+    fetchCars, 
+    fetchBrands,
+    loadMoreCars, 
+    page, 
+    totalPages 
+  } = useCarStore();
   
-  const [selectedBrand, setSelectedBrand] = useState("");
-  const [selectedPrice, setSelectedPrice] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
+  const { selectedBrand, selectedPrice, milesFrom, milesTo } = useFilterStore();
 
-  // Імітація завантаження з бекенду
+  // Допоміжна функція для збору фільтрів в купу
+  const getCurrentFilters = () => ({
+    brand: selectedBrand,
+    price: selectedPrice,
+    mileageFrom: milesFrom,
+    mileageTo: milesTo,
+  });
+
   useEffect(() => {
-    const fetchInitialData = async () => {
-      try {
-        setIsLoading(true);
-        // Тут твій fetch запит
-        
-        // Mock Data
-        const mockCars: Car[] = [
-          { id: 1, make: "Buick", model: "Enclave", year: 2008, rentalPrice: 40, address: "Kiev, Ukraine", rentalCompany: "Luxury Car Rentals", type: "SUV", mileage: 9582 },
-          { id: 2, make: "Volvo", model: "XC90", year: 2019, rentalPrice: 50, address: "Lviv, Ukraine", rentalCompany: "Premium Auto", type: "SUV", mileage: 5352 },
-          { id: 3, make: "Subaru", model: "Outback", year: 2016, rentalPrice: 30, address: "Odessa, Ukraine", rentalCompany: "Adventure Car", type: "SUV", mileage: 4061 },
-           // ... додай більше для тесту
-        ];
-        
-        setCars(mockCars);
-        setBrands(["Buick", "Volvo", "Subaru", "BMW"]);
-        setPrices([30, 40, 50, 60, 70, 80]);
-        
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchInitialData();
-  }, []);
+    fetchCars(getCurrentFilters()); 
+    fetchBrands();
+  }, [fetchCars, fetchBrands]);
 
   const handleSearch = () => {
-    console.log("Searching for:", selectedBrand, selectedPrice);
-    // Тут логіка запиту до бекенду з фільтрами
+    fetchCars(getCurrentFilters());
   };
+
+  // Функція для Load More
+  const handleLoadMore = () => {
+    loadMoreCars(getCurrentFilters());
+  };
+
+  // Перевірка: чи показувати кнопку?
+  // Показуємо тільки якщо: не вантажиться, є машини, і поточна сторінка менша за загальну кількість
+  const shouldShowLoadMore = !isLoading && cars.length > 0 && page < totalPages;
 
   return (
     <div className="min-h-screen bg-white py-10 px-4 md:px-10 lg:px-20">
+      <SearchFilters onSearch={handleSearch} />
+
+      {error && <div className="text-red-600 text-center">{error}</div>}
+
+      <CarGrid cars={cars} isLoading={isLoading} />
       
-      {/* 1. Компонент фільтрації */}
-      <SearchFilters 
-        brands={brands}
-        prices={prices}
-        selectedBrand={selectedBrand}
-        setSelectedBrand={setSelectedBrand}
-        selectedPrice={selectedPrice}
-        setSelectedPrice={setSelectedPrice}
-        onSearch={handleSearch}
-      />
-
-      {/* 2. Компонент списку карток */}
-      <CarGrid 
-        cars={cars} 
-        isLoading={isLoading} 
-      />
-
-      {/* Кнопка Load More (можна теж винести в окремий компонент, якщо хочеш) */}
-      {!isLoading && cars.length > 0 && (
-        <div className="flex justify-center">
-          <button className="button bg-transparent border border-[#3470FF] text-[#101828] hover:border-[#0B44CD] px-[51px] py-3">
+      {/* КНОПКА LOAD MORE */}
+      {shouldShowLoadMore && (
+        <div className="flex justify-center mt-10">
+          <button 
+            onClick={handleLoadMore}
+            className="text-blue-600 font-medium hover:underline hover:text-blue-800 transition-colors text-base"
+          >
             Load more
           </button>
         </div>
       )}
-
+      
     </div>
   );
 }
-

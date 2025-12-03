@@ -3,10 +3,12 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Car } from "@/types/index";
+import { useCarStore } from "@/lib/store/carStore";
 
 interface CarCardProps {
   car: Car;
 }
+
 
 const CarCard = ({ car }: CarCardProps) => {
   const [isFavorite, setIsFavorite] = useState(false);
@@ -43,7 +45,7 @@ const CarCard = ({ car }: CarCardProps) => {
       <div className="flex flex-col gap-2 mb-4 px-1">
         <div className="flex justify-between items-center text-base font-medium text-gray-900">
           <div className="flex gap-1">
-            <span>{car.make}</span>
+            <span>{car.brand}</span>
             <span className="text-blue-600">{car.model}</span>,
             <span>{car.year}</span>
           </div>
@@ -53,16 +55,16 @@ const CarCard = ({ car }: CarCardProps) => {
         <div className="text-xs text-gray-500 font-normal space-y-1">
           <div className="flex items-center gap-2 truncate">
             <span>{car.address.split(',')[0]}</span>
-            <span className="w-[1px] h-3 bg-gray-300"></span>
+            <span className="w-px h-3 bg-gray-300"></span>
             <span>{car.address.split(',')[1]}</span>
-            <span className="w-[1px] h-3 bg-gray-300"></span>
+            <span className="w-px h-3 bg-gray-300"></span>
             <span className="truncate">{car.rentalCompany}</span>
           </div>
           <div className="flex items-center gap-2">
             <span>{car.type}</span>
-            <span className="w-[1px] h-3 bg-gray-300"></span>
-            <span>{car.make}</span>
-            <span className="w-[1px] h-3 bg-gray-300"></span>
+            <span className="w-px h-3 bg-gray-300"></span>
+            <span>{car.brand}</span>
+            <span className="w-px h-3 bg-gray-300"></span>
             <span>{car.mileage.toLocaleString()} km</span>
           </div>
         </div>
